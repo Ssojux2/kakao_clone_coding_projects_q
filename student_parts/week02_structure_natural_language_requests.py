@@ -99,15 +99,10 @@ _WEEK02_AGENT: Any | None = None
 class StructuredRequest(BaseModel):
     """LLM structured output으로 추출되는 2주차 요청 스키마입니다."""
 
-    kind: RequestKind = Field(description="분류된 요청 종류")
-    title: str | None = Field(default=None, description="일정, 할 일, 알림 제목")
-    date: str | None = Field(default=None, description="연-월-일(YYYY-MM-DD) 형식 날짜")
-    start_time: str | None = Field(default=None, description="시:분(HH:MM) 형식 시작 시간")
-    end_time: str | None = Field(default=None, description="시:분(HH:MM) 형식 종료 시간")
-    members: list[str] = Field(default_factory=list, description="참석자 또는 관련 멤버")
-    priority: str | None = Field(default=None, description="할 일 우선순위")
-    reason: str | None = Field(default=None, description="분류/추출 근거")
-    original_text: str = Field(default="", description="원본 사용자 입력")
+    # TODO: kind 필드를 RequestKind 타입으로 정의하세요.
+    # TODO: title/date/start_time/end_time 필드를 정의하세요.
+    # TODO: members/priority/reason/original_text 필드를 정의하세요.
+    ...
 
 
 def _coerce_structured_request(value: Any) -> StructuredRequest:
