@@ -27,26 +27,11 @@ from student_parts.week02_structure_natural_language_requests import (
 
 _WEEK03_AGENT: Any | None = None
 
-SQLITE_MEMORY_PROMPT = (
-    "Week 3 이상에서는 새 대화를 시작해도 앱 SQLite DB에 저장된 일정, 할 일, 알림은 사라지지 않는다. "
-    "Week 3 이상에서 새 일정, 할 일, 알림을 만들 때는 Week 1의 인메모리 생성 도구가 아니라 "
-    "구조화 결과를 SQLite 저장 도구에 바로 전달한다. "
-    "사용자가 저장된 일정/할 일/알림을 묻거나 '내 일정 보여줘', '저장된 것 알려줘'처럼 요청하면 "
-    "현재 채팅 전사나 Week 1-2 임시 메모리에 없다는 이유로 모른다고 답하지 말고 SQLite 조회 도구 결과를 근거로 답한다. "
-    "personal_list_schedules 같은 Week 1 임시 조회 도구는 Week 1-2 단순 조회 전용이며 Week 3 이상에서는 SQLite 일정 조회 도구를 사용한다. "
-    "대화 전사는 같은 conversation_id 안의 임시 맥락이고, SQLite row는 새 대화에서도 접근 가능한 저장 데이터다."
-)
+# TODO: Week 3 이상 SQLite memory 관련 system prompt를 작성하세요.
+SQLITE_MEMORY_PROMPT = ""
 
-WEEK03_TOOL_CALL_PROMPT = (
-    "Week 3 tool 호출 책임 분리: 자연어 해석은 LLM이 하고, Python tool은 저장소 작업만 한다. "
-    "새 일정/할 일/알림 저장 요청에서는 먼저 extract_schedule_request(query=사용자 요청)를 호출한다. "
-    "그 다음 save_structured_request에는 structured_request의 kind, title, date, start_time, end_time, "
-    "members, priority, reason, original_text 필드를 그대로 인자로 전달한다. "
-    "save_structured_request에 원문 자연어 문자열이나 ok/tool_name/base_date wrapper를 넣지 않는다. "
-    "조회에서는 사용자가 말한 날짜/기간을 date_from/date_to ISO 날짜로 바꾸어 list tool 인자에 넣는다. "
-    "수정/삭제에서는 먼저 personal_list_saved_schedules로 후보를 본 뒤, 선택한 schedule_id나 명시 필터를 "
-    "personal_update_saved_schedule 또는 personal_delete_saved_schedules에 전달한다."
-)
+# TODO: Week 3 tool 호출 책임 분리 system prompt를 작성하세요.
+WEEK03_TOOL_CALL_PROMPT = ""
 
 
 # [수강생 구현 가이드]
@@ -473,20 +458,7 @@ def week03_prompt_parts() -> list[str]:
 
     return [
         *week02_prompt_parts(),
-        "Week 2 요청 구조화 agent는 대화를 StructuredRequest로 직접 반환해 구조화 결과를 확인했다. "
-        "Week 3부터는 최종 답변은 자연어로 작성하되, 새 일정/할 일/알림 저장 요청은 "
-        "extract_schedule_request tool 결과의 structured_request를 SQLite 저장 도구에 넘긴다.",
-        SQLITE_MEMORY_PROMPT,
-        WEEK03_TOOL_CALL_PROMPT,
-        "너는 Kanana의 Week 3 Nana logbook agent다. "
-        f"현재 날짜는 앱 시작 시 OS에서 읽은 {current_app_date_iso()}이다. "
-        "Week 3부터는 SQLite 저장 도구가 있으므로 새 일정, 할 일, 알림 생성은 personal_create_schedule을 거치지 않고 저장한다. "
-        "저장된 요청 조회는 list_saved_requests/get_saved_request를 사용한다. "
-        "저장된 일정 목록이나 내 일정 조회 요청은 personal_list_saved_schedules로 앱 SQLite 일정 row를 확인한다. "
-        "personal_list_schedules는 Week 1-2 현재 대화 임시 메모리 조회 전용이므로 Week 3의 단순 일정 조회에는 사용하지 않는다. "
-        "새 대화에서 이전에 저장한 중요한 일정/할 일/알림을 참고해야 할 때는 대화 전사가 아니라 SQLite 조회 도구 결과만 근거로 삼는다. "
-        "Week 3에서는 개인 RAG와 외부 멤버 일정 조율을 처리하지 않는다. "
-        "도구 결과에 없는 사실은 만들지 않는다."
+        # TODO: Week 3 Nana logbook agent system prompt를 작성하세요.
     ]
 
 

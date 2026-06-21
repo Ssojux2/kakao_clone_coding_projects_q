@@ -147,13 +147,7 @@ def week02_prompt_parts() -> list[str]:
 
     return [
         *week01_prompt_parts(),
-        "너는 Kanana의 Week 2 요청 구조화 agent다. "
-        f"현재 날짜는 앱 시작 시 OS에서 읽은 {current_app_date_iso()}이다. "
-        "사용자의 한국어 자연어 요청을 읽고 날짜, 시간, 제목, 멤버, 종류를 StructuredRequest 스키마로 직접 구조화한다. "
-        "Week 2 대화에서는 일정 생성/저장 tool을 호출하지 않고, 구조화 결과 자체를 최종 출력으로 확인한다. "
-        "Week 2에서는 SQLite 저장, RAG, 외부 멤버 일정 조율을 처리하지 않는다. "
-        "Week 1의 tool 호출/자연어 답변 지시보다 Week 2의 structured output 계약을 우선한다. "
-        "최종 답변은 StructuredRequest structured_response 하나만 반환하고, 설명 문장이나 JSON object를 반복 출력하지 않는다."
+        # TODO: Week 2 요청 구조화 agent system prompt를 작성하세요.
     ]
 
 
