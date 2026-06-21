@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field
 from fixed.config import CONFIG
 from fixed.llm import chat_model
 from fixed.runtime_clock import current_app_date_iso
-from student_parts.student_todo import todo_json
 from student_parts.week01_wake_up_nana import join_system_prompt, week01_prompt_parts
 
 
@@ -136,13 +135,17 @@ def extract_schedule_request(query: str) -> str:
     """사용자 프롬프트를 일정 앱용 구조화 요청 JSON으로 변환합니다."""
 
     structured = extract_structured_request(query)
-    return todo_json(
-        week=2,
-        tool_name="extract_schedule_request",
-        message="Week 2 TODO: 사용자 자연어를 StructuredRequest로 변환하고 base_date와 함께 반환하세요.",
-        received={"query": query},
-        base_date=current_app_date_iso(),
-        structured_request=structured.model_dump(),
+    return json.dumps(
+        {
+            "ok": False,
+            "week": 2,
+            "tool_name": "extract_schedule_request",
+            "message": "Week 2 TODO: 사용자 자연어를 StructuredRequest로 변환하고 base_date와 함께 반환하세요.",
+            "received": {"query": query},
+            "base_date": current_app_date_iso(),
+            "structured_request": structured.model_dump(),
+        },
+        ensure_ascii=False,
     )
 
 

@@ -21,7 +21,7 @@
 4. 선택된 agent가 prompt와 tool 목록을 보고 필요한 tool을 호출합니다.
 5. tool call/result는 상세 탭의 trace JSON으로 표시됩니다.
 
-초기 배포 상태에서 학생 구현 대상 tool은 실제 정답 로직 대신 `student_todo: true` JSON을 반환합니다. 학생은 trace에서 입력값과 기대 payload 키를 확인하며 함수 본문을 하나씩 완성합니다.
+초기 배포 상태에서 학생 구현 대상 tool은 실제 정답 로직 대신 `ok: false` placeholder JSON을 반환합니다. 학생은 trace에서 입력값과 기대 payload 키를 확인하며 함수 본문을 하나씩 완성합니다.
 
 ## 주차별 학습 흐름
 
@@ -42,7 +42,7 @@
 2. `student_parts/week01_wake_up_nana.py`부터 열어 `[수강생 구현 가이드]`를 읽습니다.
 3. `week01_tools()`가 어떤 tool을 agent에 공개하는지 확인합니다.
 4. `./run.sh --week1`로 앱을 실행하고 샘플 요청을 입력합니다.
-5. 상세 trace에서 `student_todo: true`, `tool_name`, `received` 값을 확인합니다.
+5. 상세 trace에서 `ok: false`, `tool_name`, `received` 값을 확인합니다.
 6. 해당 함수 본문을 구현한 뒤 다시 실행해 trace 결과가 어떻게 바뀌는지 비교합니다.
 
 ## 자주 쓰는 명령

@@ -19,7 +19,6 @@ from fixed.schedule_decision import (
     find_common_available_slots_payload,
     normalize_date_bound,
 )
-from student_parts.student_todo import todo_json, todo_payload
 from student_parts.week01_wake_up_nana import join_system_prompt
 from student_parts.week02_structure_natural_language_requests import extract_schedule_request
 from student_parts.week03_build_nanas_logbook import SavedScheduleListInput, personal_list_saved_schedules
@@ -612,11 +611,12 @@ def find_common_available_slots_dict(
     normalized_members = normalize_external_member_names(member_names)
     normalized_date_from = normalize_date_bound(date_from)
     normalized_date_to = normalize_date_bound(date_to)
-    return todo_payload(
-        week=6,
-        tool_name="find_common_available_slots",
-        message="Week 6 TODO: busy_rows를 수집하고 Kana agent가 고른 candidate_slots를 find_common_available_slots_payload(...)로 검증하세요.",
-        received={
+    return {
+        "ok": False,
+        "week": 6,
+        "tool_name": "find_common_available_slots",
+        "message": "Week 6 TODO: busy_rows를 수집하고 Kana agent가 고른 candidate_slots를 find_common_available_slots_payload(...)로 검증하세요.",
+        "received": {
             "member_names": member_names,
             "date_from": date_from,
             "date_to": date_to,
@@ -628,15 +628,15 @@ def find_common_available_slots_dict(
             "candidate_slots": candidate_slots,
             "llm_reason": llm_reason,
         },
-        members=["나", *normalized_members],
-        date_from=normalized_date_from,
-        date_to=normalized_date_to,
-        busy_rows=busy_rows or [],
-        candidate_slots=[],
-        candidates=[],
-        final_slot=None,
-        reason=None,
-    )
+        "members": ["나", *normalized_members],
+        "date_from": normalized_date_from,
+        "date_to": normalized_date_to,
+        "busy_rows": busy_rows or [],
+        "candidate_slots": [],
+        "candidates": [],
+        "final_slot": None,
+        "reason": None,
+    }
 
 
 @tool(description=FIND_COMMON_AVAILABLE_SLOTS_DESCRIPTION, args_schema=FindCommonAvailableSlotsInput)
@@ -654,27 +654,31 @@ def find_common_available_slots(
 ) -> str:
     """수집된 멤버 일정에서 LLM이 직접 고른 공통 가능 후보 시간을 검증합니다."""
 
-    return todo_json(
-        week=6,
-        tool_name="find_common_available_slots",
-        message="Week 6 TODO: busy_rows와 candidate_slots를 검증하고 top-level final_slot/reason/candidates를 포함해 반환하세요.",
-        received={
-            "member_names": member_names,
-            "date_from": date_from,
-            "date_to": date_to,
-            "duration_minutes": duration_minutes,
-            "workday_start": workday_start,
-            "workday_end": workday_end,
-            "limit": limit,
-            "busy_rows": busy_rows,
-            "candidate_slots": candidate_slots,
-            "llm_reason": llm_reason,
+    return json.dumps(
+        {
+            "ok": False,
+            "week": 6,
+            "tool_name": "find_common_available_slots",
+            "message": "Week 6 TODO: busy_rows와 candidate_slots를 검증하고 top-level final_slot/reason/candidates를 포함해 반환하세요.",
+            "received": {
+                "member_names": member_names,
+                "date_from": date_from,
+                "date_to": date_to,
+                "duration_minutes": duration_minutes,
+                "workday_start": workday_start,
+                "workday_end": workday_end,
+                "limit": limit,
+                "busy_rows": busy_rows,
+                "candidate_slots": candidate_slots,
+                "llm_reason": llm_reason,
+            },
+            "final_slot": None,
+            "reason": None,
+            "candidates": [],
+            "candidate_slots": [],
+            "busy_rows": busy_rows or [],
         },
-        final_slot=None,
-        reason=None,
-        candidates=[],
-        candidate_slots=[],
-        busy_rows=busy_rows or [],
+        ensure_ascii=False,
     )
 
 
@@ -694,28 +698,32 @@ def decide_final_slot(
 ) -> str:
     """LLM이 직접 고른 후보/최종 시간을 course repo payload로 기록합니다."""
 
-    return todo_json(
-        week=6,
-        tool_name="decide_final_slot",
-        message="Week 6 TODO: Kana agent가 고른 selected_index/final_slot을 decide_final_slot_payload(...) 계약에 맞춰 기록하세요.",
-        received={
-            "candidate_slots": candidate_slots,
-            "selected_slot": selected_slot,
-            "selected_index": selected_index,
-            "final_slot": final_slot,
-            "needs_agent_selection": needs_agent_selection,
-            "member_names": member_names,
-            "date_from": date_from,
-            "date_to": date_to,
-            "duration_minutes": duration_minutes,
+    return json.dumps(
+        {
+            "ok": False,
+            "week": 6,
+            "tool_name": "decide_final_slot",
+            "message": "Week 6 TODO: Kana agent가 고른 selected_index/final_slot을 decide_final_slot_payload(...) 계약에 맞춰 기록하세요.",
+            "received": {
+                "candidate_slots": candidate_slots,
+                "selected_slot": selected_slot,
+                "selected_index": selected_index,
+                "final_slot": final_slot,
+                "needs_agent_selection": needs_agent_selection,
+                "member_names": member_names,
+                "date_from": date_from,
+                "date_to": date_to,
+                "duration_minutes": duration_minutes,
+                "reason": reason,
+                "busy_rows": busy_rows,
+            },
+            "final_slot": None,
             "reason": reason,
-            "busy_rows": busy_rows,
+            "candidates": candidate_slots or [],
+            "candidate_slots": candidate_slots or [],
+            "needs_agent_selection": True,
         },
-        final_slot=None,
-        reason=reason,
-        candidates=candidate_slots or [],
-        candidate_slots=candidate_slots or [],
-        needs_agent_selection=True,
+        ensure_ascii=False,
     )
 
 
@@ -773,16 +781,20 @@ def propose_group_schedule(
 def nana_agent(query: str) -> str:
     """개인 일정과 개인 RAG 작업을 프롬프트 기반 Nana 하위 에이전트에게 위임합니다."""
 
-    return todo_json(
-        week=6,
-        tool_name="nana_agent",
-        message="Week 6 TODO: Week 4 도구를 가진 Nana 하위 agent를 실행하고 answer/trace/inner_tool_names를 반환하세요.",
-        received={"query": query},
-        selected_agent="nana_agent",
-        answer="",
-        trace=[],
-        inner_tool_names=[],
-        mode="student_todo",
+    return json.dumps(
+        {
+            "ok": False,
+            "week": 6,
+            "tool_name": "nana_agent",
+            "message": "Week 6 TODO: Week 4 도구를 가진 Nana 하위 agent를 실행하고 answer/trace/inner_tool_names를 반환하세요.",
+            "received": {"query": query},
+            "selected_agent": "nana_agent",
+            "answer": "",
+            "trace": [],
+            "inner_tool_names": [],
+            "mode": "placeholder",
+        },
+        ensure_ascii=False,
     )
 
 
@@ -790,18 +802,22 @@ def nana_agent(query: str) -> str:
 def kana_agent(query: str) -> str:
     """그룹 일정 종합 작업을 프롬프트 기반 Kana 하위 에이전트에게 위임합니다."""
 
-    return todo_json(
-        week=6,
-        tool_name="kana_agent",
-        message="Week 6 TODO: Kana 하위 agent를 실행하고 trace에서 final_slot_payload/final_decision_payload를 끌어올리세요.",
-        received={"query": query},
-        selected_agent="kana_agent",
-        answer="",
-        trace=[],
-        inner_tool_names=[],
-        final_slot_payload=None,
-        final_decision_payload=None,
-        mode="student_todo",
+    return json.dumps(
+        {
+            "ok": False,
+            "week": 6,
+            "tool_name": "kana_agent",
+            "message": "Week 6 TODO: Kana 하위 agent를 실행하고 trace에서 final_slot_payload/final_decision_payload를 끌어올리세요.",
+            "received": {"query": query},
+            "selected_agent": "kana_agent",
+            "answer": "",
+            "trace": [],
+            "inner_tool_names": [],
+            "final_slot_payload": None,
+            "final_decision_payload": None,
+            "mode": "placeholder",
+        },
+        ensure_ascii=False,
     )
 
 
