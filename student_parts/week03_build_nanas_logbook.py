@@ -27,10 +27,10 @@ from student_parts.week02_structure_natural_language_requests import (
 
 _WEEK03_AGENT: Any | None = None
 
-# TODO: Week 3 이상 SQLite memory 관련 system prompt를 작성하세요.
+# TODO: Week 3 이상 SQLite memory 관련 system prompt를 자유롭게 추가하세요.
 SQLITE_MEMORY_PROMPT = ""
 
-# TODO: Week 3 tool 호출 책임 분리 system prompt를 작성하세요.
+# TODO: Week 3 tool 호출 책임 분리 system prompt를 자유롭게 추가하세요.
 WEEK03_TOOL_CALL_PROMPT = ""
 
 
@@ -458,7 +458,7 @@ def week03_prompt_parts() -> list[str]:
 
     return [
         *week02_prompt_parts(),
-        # TODO: Week 3 Nana logbook agent system prompt를 작성하세요.
+        # TODO: Week 3 Nana logbook agent system prompt를 자유롭게 추가하세요.
     ]
 
 

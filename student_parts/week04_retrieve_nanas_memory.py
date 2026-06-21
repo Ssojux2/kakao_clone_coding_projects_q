@@ -346,7 +346,7 @@ def week04_prompt_parts() -> list[str]:
 
     return [
         *week03_prompt_parts(),
-        # TODO: Week 4 Nana memory agent system prompt를 작성하세요.
+        # TODO: Week 4 Nana memory agent system prompt를 자유롭게 추가하세요.
     ]
 
 

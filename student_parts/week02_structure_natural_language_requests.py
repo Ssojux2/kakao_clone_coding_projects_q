@@ -147,7 +147,7 @@ def week02_prompt_parts() -> list[str]:
 
     return [
         *week01_prompt_parts(),
-        # TODO: Week 2 요청 구조화 agent system prompt를 작성하세요.
+        # TODO: Week 2 요청 구조화 agent system prompt를 자유롭게 추가하세요.
     ]
 
 
