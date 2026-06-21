@@ -11,7 +11,7 @@ Kanana Schedule Agent runner
 
 Usage:
   ./run.sh                 Run the Week 1 Gradio app
-  ./run.sh --weekN         Run the selected week app, where N is 1-6
+  ./run.sh --week1         Run the Week 1 Gradio app
   ./run.sh --install       Run uv sync, then run the Week 1 Gradio app
   ./run.sh --conda [ARGS]  Use the legacy conda environment.yml runner
   ./run.sh --help          Show this help
@@ -34,10 +34,12 @@ run_uv() {
     exit 1
   fi
 
-  local active_week="${KANANA_ACTIVE_WEEK:-1}"
-  if [[ "${1:-}" =~ ^--week([1-6])$ ]]; then
-    active_week="${BASH_REMATCH[1]}"
+  local active_week="1"
+  if [[ "${1:-}" == "--week1" ]]; then
     shift
+  elif [[ "${1:-}" =~ ^--week[0-9]+$ ]]; then
+    echo "main 브랜치는 Week 1만 포함합니다. Week 2-6은 week_1_to_6f 브랜치를 사용하세요." >&2
+    exit 1
   fi
   export KANANA_ACTIVE_WEEK="$active_week"
   export PYTHONNOUSERSITE=1
@@ -71,10 +73,12 @@ run_conda() {
     exit 1
   fi
 
-  local active_week="${KANANA_ACTIVE_WEEK:-1}"
-  if [[ "${1:-}" =~ ^--week([1-6])$ ]]; then
-    active_week="${BASH_REMATCH[1]}"
+  local active_week="1"
+  if [[ "${1:-}" == "--week1" ]]; then
     shift
+  elif [[ "${1:-}" =~ ^--week[0-9]+$ ]]; then
+    echo "main 브랜치는 Week 1만 포함합니다. Week 2-6은 week_1_to_6f 브랜치를 사용하세요." >&2
+    exit 1
   fi
   export KANANA_ACTIVE_WEEK="$active_week"
 

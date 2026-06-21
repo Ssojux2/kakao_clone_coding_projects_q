@@ -186,7 +186,7 @@ def _saved_schedule_lines(limit: int = 8) -> list[str]:
 
 def _saved_schedule_markdown(limit: int = 8) -> str:
     if not _sqlite_schedule_memory_enabled():
-        return "Week 3부터 SQLite에 저장된 일정이 표시됩니다."
+        return "Week 1 main 브랜치에서는 현재 대화 안의 임시 일정만 사용합니다."
     lines = _saved_schedule_lines(limit=limit)
     if not lines:
         return "저장된 일정이 아직 없습니다."
