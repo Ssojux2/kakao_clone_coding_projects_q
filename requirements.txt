@@ -1,0 +1,9 @@
+gradio>=6.0
+langchain>=1.0
+langchain-openai>=1.0
+langchain-mcp-adapters>=0.1
+mcp>=1.9
+python-dotenv>=1.0
+pydantic>=2.7
+chromadb>=0.5
+numpy>=1.26
