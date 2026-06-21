@@ -5,7 +5,7 @@
 ## 운영 기준
 
 - 수업은 앱 실행, 채팅 입력, 상세 trace 확인, 함수 구현, 재실행 순서로 진행합니다.
-- 초기 배포 상태의 구현 대상 함수는 `ok: false` placeholder JSON을 반환합니다.
+- 초기 배포 상태의 구현 대상 함수 본문은 `# TODO`와 빈칸으로 남아 있습니다.
 - 학생은 `received` 입력값과 기대 payload 키를 trace에서 확인한 뒤 실제 구현으로 바꿉니다.
 - prompt, schema, tool-list, agent builder, MCP server 기준 구현은 연결 구조를 읽는 참고 코드입니다.
 
@@ -61,7 +61,7 @@
 
 1. 이번 주차 파일의 `[수강생 구현 가이드]`를 읽습니다.
 2. 앱을 해당 주차로 실행합니다.
-3. 샘플 프롬프트를 입력하고 상세 trace의 `ok: false` placeholder payload를 봅니다.
+3. 샘플 프롬프트를 입력하고 상세 trace에서 호출된 tool과 입력값을 봅니다.
 4. 구현 대상 함수 본문만 수정합니다.
 5. 다시 실행해 trace payload가 실제 결과로 바뀌었는지 확인합니다.
 

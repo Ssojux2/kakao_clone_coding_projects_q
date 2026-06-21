@@ -219,15 +219,8 @@ def add_personal_reference_dict(
 ) -> dict[str, Any]:
     """개인 참고자료를 vector store에 추가하고 backend 정보를 반환합니다."""
 
-    return {
-        "ok": False,
-        "week": 4,
-        "tool_name": "add_personal_reference",
-        "message": "Week 4 TODO: PersonalReferenceStore.add_personal_reference(...)로 개인 참고자료를 저장하세요.",
-        "received": {"title": title, "content": content, "tags": tags},
-        "reference_backend": None,
-        "reference": None,
-    }
+    # TODO: PersonalReferenceStore.add_personal_reference(...)로 개인 참고자료를 저장하세요.
+    ...
 
 
 def search_personal_reference_hits(
@@ -238,7 +231,8 @@ def search_personal_reference_hits(
 ) -> list[dict[str, Any]]:
     """ChromaDB 검색 결과를 tool이 바로 반환하기 쉬운 hit 구조로 정리합니다."""
 
-    return []
+    # TODO: 개인 참고자료 검색 결과를 id/content/distance/metadata 구조로 정리하세요.
+    ...
 
 
 def search_saved_request_rows(
@@ -249,7 +243,8 @@ def search_saved_request_rows(
 ) -> list[dict[str, Any]]:
     """SQLite 저장 요청을 검색하고 실제 검색 결과만 반환합니다."""
 
-    return []
+    # TODO: AppSQLiteStore.search_saved_requests(...)로 저장 요청을 검색하세요.
+    ...
 
 
 def search_conversation_messages_dict(
@@ -262,18 +257,8 @@ def search_conversation_messages_dict(
 ) -> dict[str, Any]:
     """SQLite 대화 목록을 lazy sync한 뒤 ChromaDB conversation RAG 결과를 반환합니다."""
 
-    return {
-        "ok": False,
-        "week": 4,
-        "tool_name": "search_conversation_messages",
-        "message": "Week 4 TODO: SQLite 대화 기록을 ConversationRAGStore에 lazy sync한 뒤 현재 대화를 제외하고 검색하세요.",
-        "received": {"query": query, "top_k": top_k, "conversation_id": conversation_id},
-        "hits": [],
-        "rows": [],
-        "context": "",
-        "rag_backend": None,
-        "sync": None,
-    }
+    # TODO: SQLite 대화 기록을 ConversationRAGStore에 lazy sync한 뒤 현재 대화를 제외하고 검색하세요.
+    ...
 
 
 def search_conversation_message_rows(
@@ -285,53 +270,32 @@ def search_conversation_message_rows(
 ) -> list[dict[str, Any]]:
     """앱 SQLite에 저장된 일반 채팅 대화 청크를 RAG 검색합니다."""
 
-    return []
+    # TODO: search_conversation_messages_dict(...) 결과에서 hits만 반환하세요.
+    ...
 
 
 @tool(args_schema=AddPersonalReferenceInput)
 def add_personal_reference(title: str, content: str, tags: list[str] | None = None) -> str:
     """개인 참고자료를 ChromaDB에 추가합니다."""
 
-    return json_payload(
-        add_personal_reference_dict(
-            REFERENCE_STORE,
-            title=title,
-            content=content,
-            tags=tags,
-        )
-    )
+    # TODO: 개인 참고자료를 저장하고 JSON 문자열로 반환하세요.
+    ...
 
 
 @tool(args_schema=SearchPersonalReferencesInput)
 def search_personal_references(query: str, top_k: int = 2) -> str:
     """개인 참고자료를 ChromaDB와 OpenAI embedding 기반으로 검색합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 4,
-            "tool_name": "search_personal_references",
-            "message": "Week 4 TODO: query/top_k로 개인 참고자료 vector store를 검색하고 top-level hits를 반환하세요.",
-            "received": {"query": query, "top_k": top_k},
-            "hits": [],
-        }
-    )
+    # TODO: query/top_k로 개인 참고자료 vector store를 검색하고 top-level hits를 반환하세요.
+    ...
 
 
 @tool(args_schema=SearchSavedRequestsInput)
 def search_saved_requests(query: str, top_k: int = 3) -> str:
     """SQLite에 저장된 구조화 일정/할 일/알림 row를 검색합니다. query에는 LLM이 고른 일정/할 일/알림 핵심어를 넣습니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 4,
-            "tool_name": "search_saved_requests",
-            "message": "Week 4 TODO: AppSQLiteStore.search_saved_requests(...)로 저장 요청을 검색하고 top-level rows를 반환하세요.",
-            "received": {"query": query, "top_k": top_k},
-            "rows": [],
-        }
-    )
+    # TODO: AppSQLiteStore.search_saved_requests(...)로 저장 요청을 검색하고 top-level rows를 반환하세요.
+    ...
 
 
 @tool(args_schema=SearchConversationMessagesInput)
@@ -342,15 +306,8 @@ def search_conversation_messages(
 ) -> str:
     """앱 SQLite 대화 목록을 대화 단위 ChromaDB RAG로 검색합니다. query에는 LLM이 고른 짧은 핵심 명사나 구를 넣습니다."""
 
-    return json_payload(
-        search_conversation_messages_dict(
-            SQLITE_STORE,
-            CONVERSATION_RAG_STORE,
-            query=query,
-            top_k=top_k,
-            conversation_id=conversation_id,
-        )
-    )
+    # TODO: 앱 SQLite 대화 목록을 대화 단위 ChromaDB RAG로 검색하고 JSON 문자열로 반환하세요.
+    ...
 
 
 @tool(args_schema=SearchNanaMemoryInput)
@@ -363,25 +320,8 @@ def search_nana_memory(
 ) -> str:
     """개인 참고자료와 SQLite 저장 일정을 한 번에 검색하고 일정 chunk를 반환합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 4,
-            "tool_name": "search_nana_memory",
-            "message": "Week 4 TODO: compatibility 통합 검색이 필요하면 개인 참고자료와 SQLite 일정 chunk를 함께 구성하세요.",
-            "received": {
-                "query": query,
-                "date_from": date_from,
-                "date_to": date_to,
-                "attendee": attendee,
-                "limit": limit,
-            },
-            "reference_backend": None,
-            "reference_hits": [],
-            "schedule_chunks": [],
-            "context": "",
-        }
-    )
+    # TODO: compatibility 통합 검색이 필요하면 개인 참고자료와 SQLite 일정 chunk를 함께 구성하세요.
+    ...
 
 def week04_tools() -> list[Any]:
     """3주차까지의 도구에 4주차 RAG 도구를 누적한 목록입니다."""

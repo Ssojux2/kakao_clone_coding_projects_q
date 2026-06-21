@@ -123,30 +123,16 @@ def _coerce_structured_request(value: Any) -> StructuredRequest:
 def extract_structured_request(text: str) -> StructuredRequest:
     """agent를 새로 띄우지 않고 structured LLM 호출로 요청을 변환합니다."""
 
-    return StructuredRequest(
-        kind="unknown",
-        reason="Week 2 TODO: chat_model().with_structured_output(StructuredRequest, ...)로 자연어 요청을 구조화하세요.",
-        original_text=text,
-    )
+    # TODO: chat_model().with_structured_output(StructuredRequest, ...)로 자연어 요청을 구조화하세요.
+    ...
 
 
 @tool
 def extract_schedule_request(query: str) -> str:
     """사용자 프롬프트를 일정 앱용 구조화 요청 JSON으로 변환합니다."""
 
-    structured = extract_structured_request(query)
-    return json.dumps(
-        {
-            "ok": False,
-            "week": 2,
-            "tool_name": "extract_schedule_request",
-            "message": "Week 2 TODO: 사용자 자연어를 StructuredRequest로 변환하고 base_date와 함께 반환하세요.",
-            "received": {"query": query},
-            "base_date": current_app_date_iso(),
-            "structured_request": structured.model_dump(),
-        },
-        ensure_ascii=False,
-    )
+    # TODO: extract_structured_request 결과를 base_date와 함께 JSON 문자열로 반환하세요.
+    ...
 
 
 def week02_tools() -> list[Any]:

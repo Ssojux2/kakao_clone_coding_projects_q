@@ -263,18 +263,8 @@ def save_structured_request_payload(
 ) -> dict[str, Any]:
     """검증된 structured request를 앱 DB에 저장합니다."""
 
-    structured_request = _save_input_from(request)
-    return {
-        "ok": False,
-        "week": 3,
-        "tool_name": "save_structured_request",
-        "message": "Week 3 TODO: 검증된 StructuredRequest를 AppSQLiteStore.save_structured_request(...)로 저장하세요.",
-        "received": {"structured_request": structured_request.model_dump(exclude_none=True)},
-        "request_id": None,
-        "kind": structured_request.kind,
-        "saved_rows": [],
-        "shared_sync": None,
-    }
+    # TODO: 검증된 StructuredRequest를 AppSQLiteStore.save_structured_request(...)로 저장하세요.
+    ...
 
 
 class SavedRequestListInput(BaseModel):
@@ -334,36 +324,15 @@ def _delete_saved_schedules(
 ) -> dict[str, Any]:
     """삭제 guard와 DB 호출을 한 곳에 둡니다."""
 
-    filters = {
-        "schedule_ids": schedule_ids,
-        "date": date,
-        "title": title,
-        "start_time": start_time,
-        "time_unspecified": time_unspecified,
-    }
-    return {
-        "ok": False,
-        "week": 3,
-        "tool_name": "personal_delete_saved_schedules",
-        "message": "Week 3 TODO: 조건 없는 삭제를 막고, 조건이 있으면 AppSQLiteStore 삭제 메서드로 일정 row를 삭제하세요.",
-        "received": {**filters, "delete_all": delete_all},
-        "delete_all": delete_all,
-        "bulk_delete": False,
-        "deleted_count": 0,
-        "filters": filters,
-        "deleted": [],
-    }
+    # TODO: 조건 없는 삭제를 막고, 조건이 있으면 AppSQLiteStore 삭제 메서드로 일정 row를 삭제하세요.
+    ...
 
 
 def structured_request_from_week01_schedule(schedule: dict[str, Any]) -> SaveStructuredRequestInput:
     """Week 1 임시 일정 dict를 Week 3 저장 입력으로 변환합니다."""
 
-    return SaveStructuredRequestInput(
-        kind="unknown",
-        reason="Week 3 TODO: Week 1 임시 schedule dict를 SaveStructuredRequestInput으로 변환하세요.",
-        original_text=schedule.get("title") or "",
-        source_schedule_id=schedule.get("id"),
-    )
+    # TODO: Week 1 임시 schedule dict를 SaveStructuredRequestInput으로 변환하세요.
+    ...
 
 
 @tool("personal_create_schedule")
@@ -376,24 +345,8 @@ def personal_create_schedule(
 ) -> str:
     """Nana의 개인 일정을 생성하고 Week 3+ 앱 SQLite DB에도 저장합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "personal_create_schedule",
-            "message": "Week 3 TODO: Week 1 일정 생성 결과를 StructuredRequest로 바꾸고 SQLite 저장까지 연결하세요.",
-            "received": {
-                "title": title,
-                "date": date,
-                "start_time": start_time,
-                "end_time": end_time,
-                "attendees": attendees,
-            },
-            "created_schedule": None,
-            "structured_request": None,
-            "sqlite_save": None,
-        }
-    )
+    # TODO: Week 1 일정 생성 결과를 StructuredRequest로 바꾸고 SQLite 저장까지 연결하세요.
+    ...
 
 
 @tool(args_schema=SaveStructuredRequestInput)
@@ -411,30 +364,8 @@ def save_structured_request(
 ) -> str:
     """Week 2 structured_request 필드를 검증한 뒤 SQLite에 저장합니다."""
 
-    request = {
-        "kind": kind,
-        "title": title,
-        "date": date,
-        "start_time": start_time,
-        "end_time": end_time,
-        "members": members or [],
-        "priority": priority,
-        "reason": reason,
-        "original_text": original_text,
-        "source_schedule_id": source_schedule_id,
-    }
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "save_structured_request",
-            "message": "Week 3 TODO: 함수 인자로 받은 structured_request 필드를 저장 dict로 정리해 AppSQLiteStore에 저장하세요.",
-            "received": {key: value for key, value in request.items() if value is not None},
-            "request_id": None,
-            "saved_rows": [],
-            "shared_sync": None,
-        }
-    )
+    # TODO: 함수 인자로 받은 structured_request 필드를 저장 dict로 정리해 AppSQLiteStore에 저장하세요.
+    ...
 
 
 @tool(args_schema=SavedRequestListInput)
@@ -445,32 +376,16 @@ def list_saved_requests(
 ) -> str:
     """SQLite에 저장된 구조화 요청 목록을 조회합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "list_saved_requests",
-            "message": "Week 3 TODO: AppSQLiteStore.list_saved_requests(...)에 kind/date_from/date_to 필터를 넘겨 조회하세요.",
-            "received": {"kind": kind, "date_from": date_from, "date_to": date_to},
-            "rows": [],
-        }
-    )
+    # TODO: AppSQLiteStore.list_saved_requests(...)에 kind/date_from/date_to 필터를 넘겨 조회하세요.
+    ...
 
 
 @tool(args_schema=SavedRequestGetInput)
 def get_saved_request(request_id: str) -> str:
     """request_id로 구조화 요청 행 하나를 조회합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "get_saved_request",
-            "message": "Week 3 TODO: AppSQLiteStore.get_saved_request(...)로 request_id 단건을 조회하세요.",
-            "received": {"request_id": request_id},
-            "row": None,
-        }
-    )
+    # TODO: AppSQLiteStore.get_saved_request(...)로 request_id 단건을 조회하세요.
+    ...
 
 
 @tool(args_schema=SavedScheduleListInput)
@@ -482,24 +397,8 @@ def personal_list_saved_schedules(
 ) -> str:
     """앱 DB에 저장된 일정 목록을 날짜/종류 필터로 반환합니다. Nana가 조회/수정/삭제 후보를 볼 때 사용합니다."""
 
-    effective_kind = kind or "personal_schedule"
-    filters = {
-        "kind": effective_kind,
-        "date_from": date_from,
-        "date_to": date_to,
-        "limit": limit,
-    }
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "personal_list_saved_schedules",
-            "message": "Week 3 TODO: AppSQLiteStore.list_schedules(...)로 저장된 일정 후보를 조회하세요.",
-            "received": filters,
-            "filters": filters,
-            "schedules": [],
-        }
-    )
+    # TODO: AppSQLiteStore.list_schedules(...)로 저장된 일정 후보를 조회하세요.
+    ...
 
 
 def delete_saved_schedules_dict(
@@ -511,15 +410,8 @@ def delete_saved_schedules_dict(
     delete_all: bool = False,
     app_store: AppSQLiteStore | None = None,
 ) -> dict[str, Any]:
-    return _delete_saved_schedules(
-        store=app_store or _store(),
-        schedule_ids=schedule_ids,
-        date=date,
-        title=title,
-        start_time=start_time,
-        time_unspecified=time_unspecified,
-        delete_all=delete_all,
-    )
+    # TODO: tool wrapper 없이 삭제 로직을 호출할 수 있는 dict helper를 완성하세요.
+    ...
 
 
 @tool(args_schema=SavedScheduleUpdateInput)
@@ -533,25 +425,8 @@ def personal_update_saved_schedule(
 ) -> str:
     """앱 DB에 저장된 내 일정 원본을 수정하고 공유 일정 복사본을 같은 값으로 갱신합니다."""
 
-    return json_payload(
-        {
-            "ok": False,
-            "week": 3,
-            "tool_name": "personal_update_saved_schedule",
-            "message": "Week 3 TODO: None이 아닌 필드만 AppSQLiteStore.update_schedule(...)에 넘겨 저장 일정을 수정하세요.",
-            "received": {
-                "schedule_id": schedule_id,
-                "title": title,
-                "date": date,
-                "start_time": start_time,
-                "end_time": end_time,
-                "attendees": attendees,
-            },
-            "schedule_id": schedule_id,
-            "updated_schedule": None,
-            "shared_sync": None,
-        }
-    )
+    # TODO: None이 아닌 필드만 AppSQLiteStore.update_schedule(...)에 넘겨 저장 일정을 수정하세요.
+    ...
 
 
 @tool(args_schema=SavedScheduleDeleteInput)
@@ -565,17 +440,8 @@ def personal_delete_saved_schedules(
 ) -> str:
     """Nana가 고른 일정 ID나 날짜/제목/시간 필터로 저장 일정을 삭제합니다."""
 
-    return json_payload(
-        _delete_saved_schedules(
-            store=_store(),
-            schedule_ids=schedule_ids,
-            date=date,
-            title=title,
-            start_time=start_time,
-            time_unspecified=time_unspecified,
-            delete_all=delete_all,
-        )
-    )
+    # TODO: 일정 ID나 날짜/제목/시간 필터로 저장 일정을 삭제하고 JSON 문자열로 반환하세요.
+    ...
 
 
 def week03_tools() -> list[Any]:
